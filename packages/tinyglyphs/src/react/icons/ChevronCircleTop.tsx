@@ -1,0 +1,21 @@
+import { forwardRef } from "react";
+import { IconBase } from "../icon-base";
+import type { IconProps } from "../types";
+
+export const ChevronCircleTopIcon = forwardRef<SVGSVGElement, IconProps>(
+  (props, ref) => (
+    <IconBase ref={ref} {...props}>
+      <g clipPath="url(#clip0_59_3562)">
+<path d="M5 9.5L8 6.5L11 9.5" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M1 8C1 4.13401 4.13401 1 8 1V1C11.866 1 15 4.13401 15 8V8C15 11.866 11.866 15 8 15V15C4.13401 15 1 11.866 1 8V8Z" strokeWidth="1.5"/>
+</g>
+<defs>
+<clipPath id="clip0_59_3562">
+<rect width="16" height="16"/>
+</clipPath>
+</defs>
+    </IconBase>
+  )
+);
+
+ChevronCircleTopIcon.displayName = "ChevronCircleTopIcon";

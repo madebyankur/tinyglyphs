@@ -1,0 +1,13 @@
+import { forwardRef } from "react";
+import { IconBase } from "../icon-base";
+import type { IconProps } from "../types";
+
+export const FlashlightIcon = forwardRef<SVGSVGElement, IconProps>(
+  (props, ref) => (
+    <IconBase ref={ref} {...props}>
+      <path d="M12 4L14 2M9.5 2.5L10 1M13.5 6.5L15 6M1.5 12.5L4.85771 9.14228C5.27652 8.72348 5.56198 8.19009 5.67814 7.60931L5.91093 6.44534C5.96901 6.15496 6.11174 5.88826 6.32114 5.67886L7.64645 4.35355C7.84171 4.15829 8.15829 4.15829 8.35355 4.35355L11.6464 7.64645C11.8417 7.84171 11.8417 8.15829 11.6464 8.35355L10.3211 9.67886C10.1117 9.88826 9.84504 10.031 9.55465 10.0891L8.39069 10.3219C7.80991 10.438 7.27652 10.7235 6.85771 11.1423L3.5 14.5C2.94771 15.0523 2.05228 15.0523 1.5 14.5C0.947714 13.9477 0.947714 13.0523 1.5 12.5Z" strokeLinecap="round" strokeLinejoin="round"/>
+    </IconBase>
+  )
+);
+
+FlashlightIcon.displayName = "FlashlightIcon";

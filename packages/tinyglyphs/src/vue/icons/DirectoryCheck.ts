@@ -1,0 +1,12 @@
+import { defineComponent, h } from 'vue'
+import { IconBase, iconBaseProps } from '../icon-base'
+
+export const DirectoryCheckIcon = defineComponent({
+  name: 'DirectoryCheckIcon',
+  props: iconBaseProps,
+  setup(props, { attrs }) {
+    return () => h(IconBase, { ...props, ...attrs }, () => [
+      h('path', {"d":"M9.49995 2H10.6458C11.7822 2 12.821 2.64201 13.3291 3.65836L13.4999 4M4.00001 9L5.00001 10L7.00001 7.5M1.00003 11V5C1.00003 3.34315 2.34318 2 4.00003 2H6.07298C6.64114 2 7.16053 2.321 7.41462 2.82918L8.58544 5.17082C8.83953 5.679 9.35892 6 9.92708 6H13.5C14.3285 6 15 6.67157 15 7.5V11C15 12.6569 13.6569 14 12 14H4.00003C2.34318 14 1.00003 12.6569 1.00003 11Z","stroke-linecap":"round","stroke-linejoin":"round"})
+    ])
+  }
+})

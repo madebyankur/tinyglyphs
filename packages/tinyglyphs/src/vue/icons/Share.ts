@@ -1,0 +1,12 @@
+import { defineComponent, h } from 'vue'
+import { IconBase, iconBaseProps } from '../icon-base'
+
+export const ShareIcon = defineComponent({
+  name: 'ShareIcon',
+  props: iconBaseProps,
+  setup(props, { attrs }) {
+    return () => h(IconBase, { ...props, ...attrs }, () => [
+      h('path', {"d":"M8 1V11M8 1L10 3M8 1L6 3M12 5C13.6569 5 15 6.34315 15 8V12C15 13.6569 13.6569 15 12 15H4C2.34315 15 1 13.6569 1 12V8C1 6.34315 2.34315 5 4 5","stroke-linecap":"round","stroke-linejoin":"round"})
+    ])
+  }
+})

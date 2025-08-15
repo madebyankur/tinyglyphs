@@ -1,0 +1,36 @@
+import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+@Component({
+  selector: 'tg-circleloading',
+  standalone: true,
+  imports: [CommonModule],
+  template: `
+    <svg
+      [attr.width]="size"
+      [attr.height]="size"
+      viewBox="0 0 16 16"
+      fill="none"
+      [attr.stroke]="color"
+      [attr.stroke-width]="actualStrokeWidth"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      [class]="'icon ' + (class || '')"
+    >
+      <path d="M8 1C6.61553 1 5.26216 1.41054 4.11101 2.17971C2.95987 2.94888 2.06266 4.04213 1.53285 5.32122C1.00303 6.6003 0.86441 8.00776 1.13451 9.36563C1.4046 10.7235 2.07129 11.9708 3.05026 12.9497C4.02922 13.9287 5.2765 14.5954 6.63437 14.8655C7.99224 15.1356 9.39971 14.997 10.6788 14.4672C11.9579 13.9373 13.0511 13.0401 13.8203 11.889C14.5895 10.7378 15 9.38447 15 8" stroke-linecap="round"/>
+    </svg>
+  `
+})
+export class CircleLoadingIconComponent {
+  @Input() size: number | string = 16;
+  @Input() color: string = 'currentColor';
+  @Input() strokeWidth: number | string = 1;
+  @Input() absoluteStrokeWidth: boolean = false;
+  @Input() class: string = '';
+
+  get actualStrokeWidth(): number | string {
+    return this.absoluteStrokeWidth
+      ? Number(this.strokeWidth) * (16 / Number(this.size))
+      : this.strokeWidth;
+  }
+}

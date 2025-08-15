@@ -1,0 +1,45 @@
+{
+  "name": "tinyglyphs-monorepo",
+  "version": "0.1.1-alpha",
+  "private": true,
+  "description": "A tiny collection of simple lined icons monorepo with documentation",
+  "author": "Ankur Chauhan <hi@ankurchauhan.design>",
+  "license": "MIT",
+  "homepage": "https://tinyglyphs.ankur.design",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/madebyankur/tinyglyphs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/madebyankur/tinyglyphs/issues"
+  },
+  "scripts": {
+    "build": "pnpm -r build",
+    "dev": "pnpm -r dev",
+    "clean": "pnpm -r clean",
+    "type-check": "pnpm -r type-check",
+    "lint": "pnpm -r lint",
+    "test": "pnpm -r test",
+    "test:coverage": "pnpm --filter tinyglyphs test:coverage",
+    "test:bundle": "pnpm --filter tinyglyphs test:bundle",
+    "docs:dev": "pnpm --filter tinyglyphs-docs dev",
+    "docs:build": "pnpm --filter tinyglyphs-docs build",
+    "docs:start": "pnpm --filter tinyglyphs-docs start",
+    "icons:build": "pnpm --filter tinyglyphs build",
+    "icons:generate": "pnpm --filter tinyglyphs generate",
+    "icons:analyze": "pnpm --filter tinyglyphs analyze-bundle",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "pnpm build && changeset publish"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.27.7",
+    "@changesets/changelog-github": "^0.5.0",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=22.11.0"
+  },
+  "packageManager": "pnpm@9.12.3"
+}

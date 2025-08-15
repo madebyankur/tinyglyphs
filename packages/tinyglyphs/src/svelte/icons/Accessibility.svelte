@@ -1,0 +1,26 @@
+<script lang="ts">
+  export let size: number | string = 16;
+  export let color: string = 'currentColor';
+  export let strokeWidth: number | string = 1;
+  export let absoluteStrokeWidth: boolean = false;
+
+  $: actualStrokeWidth = absoluteStrokeWidth
+    ? Number(strokeWidth) * (16 / Number(size))
+    : strokeWidth;
+</script>
+
+<svg
+  width={size}
+  height={size}
+  viewBox="0 0 16 16"
+  fill="none"
+  stroke={color}
+  stroke-width={actualStrokeWidth}
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class="icon {$$props.class || ''}"
+  {...$$restProps}
+>
+  <path d="M9.5 2.5C9.5 3.32843 8.82843 4 8 4C7.17157 4 6.5 3.32843 6.5 2.5C6.5 1.67157 7.17157 1 8 1C8.82843 1 9.5 1.67157 9.5 2.5Z" stroke-linejoin="round"/>
+<path d="M11.0762 8.46189L13.4487 7.27564C13.7866 7.10671 14 6.76139 14 6.38365C14 5.70295 13.3331 5.22229 12.6874 5.43755L12.5449 5.48505C9.59474 6.46842 6.40526 6.46842 3.45515 5.48505L3.31264 5.43755C2.66688 5.22229 2 5.70295 2 6.38365C2 6.76139 2.21342 7.10671 2.55128 7.27564L4.92377 8.46189C5.5526 8.7763 5.87868 9.48527 5.70817 10.1673L4.8816 13.4736C4.68777 14.2489 5.27418 15 6.07338 15C6.62186 15 7.10388 14.6364 7.25456 14.109L8 11.5L8.74544 14.109C8.89612 14.6364 9.37814 15 9.92662 15C10.7258 15 11.3122 14.2489 11.1184 13.4736L10.2918 10.1673C10.1213 9.48527 10.4474 8.7763 11.0762 8.46189Z" stroke-linejoin="round"/>
+</svg>

@@ -1,0 +1,12 @@
+import { defineComponent, h } from 'vue'
+import { IconBase, iconBaseProps } from '../icon-base'
+
+export const BriefcaseIcon = defineComponent({
+  name: 'BriefcaseIcon',
+  props: iconBaseProps,
+  setup(props, { attrs }) {
+    return () => h(IconBase, { ...props, ...attrs }, () => [
+      h('path', {"d":"M4 4V2.5C4 1.67157 4.67157 1 5.5 1H10.5C11.3284 1 12 1.67157 12 2.5V4M4 4H2.38847C1.62164 4 1 4.62164 1 5.38847V6.29913C1 6.73253 1.23223 7.1327 1.60853 7.34773C5.56901 9.61086 10.431 9.61086 14.3915 7.34773C14.7678 7.1327 15 6.73253 15 6.29913V5.38847C15 4.62164 14.3784 4 13.6115 4H12M4 4H12M1.5 8V12C1.5 13.6569 2.84315 15 4.5 15H11.5C13.1569 15 14.5 13.6569 14.5 12V8","stroke-linecap":"round"})
+    ])
+  }
+})

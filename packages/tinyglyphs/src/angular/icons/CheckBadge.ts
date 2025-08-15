@@ -1,0 +1,36 @@
+import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+@Component({
+  selector: 'tg-checkbadge',
+  standalone: true,
+  imports: [CommonModule],
+  template: `
+    <svg
+      [attr.width]="size"
+      [attr.height]="size"
+      viewBox="0 0 16 16"
+      fill="none"
+      [attr.stroke]="color"
+      [attr.stroke-width]="actualStrokeWidth"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      [class]="'icon ' + (class || '')"
+    >
+      <path d="M6.00001 9L7.00001 10L10 6.5M5.16424 2.02971C5.76108 2.19019 6.39643 1.98375 6.78496 1.5031C7.4103 0.729515 8.58973 0.729515 9.21507 1.5031C9.6036 1.98375 10.2389 2.19019 10.8358 2.02971C11.7964 1.77143 12.7506 2.46468 12.8018 3.45809C12.8336 4.07531 13.2263 4.61577 13.8035 4.83676C14.7324 5.19244 15.0969 6.31414 14.5544 7.14793C14.2173 7.66597 14.2173 8.33402 14.5544 8.85206C15.0969 9.68585 14.7324 10.8075 13.8035 11.1632C13.2263 11.3842 12.8336 11.9247 12.8018 12.5419C12.7506 13.5353 11.7964 14.2286 10.8358 13.9703C10.2389 13.8098 9.6036 14.0162 9.21507 14.4969C8.58973 15.2705 7.4103 15.2705 6.78496 14.4969C6.39643 14.0162 5.76108 13.8098 5.16424 13.9703C4.20362 14.2286 3.24944 13.5353 3.19824 12.5419C3.16643 11.9247 2.77376 11.3842 2.19658 11.1632C1.26761 10.8075 0.903145 9.68585 1.44563 8.85206C1.78269 8.33402 1.78269 7.66597 1.44563 7.14793C0.903145 6.31414 1.26761 5.19244 2.19658 4.83676C2.77376 4.61577 3.16643 4.07531 3.19824 3.45809C3.24944 2.46468 4.20362 1.77143 5.16424 2.02971Z" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  `
+})
+export class CheckBadgeIconComponent {
+  @Input() size: number | string = 16;
+  @Input() color: string = 'currentColor';
+  @Input() strokeWidth: number | string = 1;
+  @Input() absoluteStrokeWidth: boolean = false;
+  @Input() class: string = '';
+
+  get actualStrokeWidth(): number | string {
+    return this.absoluteStrokeWidth
+      ? Number(this.strokeWidth) * (16 / Number(this.size))
+      : this.strokeWidth;
+  }
+}

@@ -1,0 +1,36 @@
+import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+@Component({
+  selector: 'tg-usergroup',
+  standalone: true,
+  imports: [CommonModule],
+  template: `
+    <svg
+      [attr.width]="size"
+      [attr.height]="size"
+      viewBox="0 0 16 16"
+      fill="none"
+      [attr.stroke]="color"
+      [attr.stroke-width]="actualStrokeWidth"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      [class]="'icon ' + (class || '')"
+    >
+      <path d="M13.5 9C14.0209 9.38771 14.4644 9.91252 14.7759 10.5744C15.044 11.1443 14.4012 11.5357 14 11.7979M2.33684 9C1.81599 9.38771 1.37247 9.91252 1.06098 10.5744C0.768208 11.1966 1.56586 11.638 1.99998 11.9004M11.8292 11.7094C9.9292 14.3219 6.03371 14.3219 4.13373 11.7094C4.03731 11.5768 4.00543 11.4071 4.04639 11.2484C5.09144 7.19881 10.8715 7.19881 11.9165 11.2484C11.9575 11.4071 11.9256 11.5768 11.8292 11.7094ZM8.00001 1C9.10458 1 10 1.89543 10 3C10 4.10457 9.10458 5 8.00001 5C6.89544 5 6.00001 4.10457 6.00001 3C6.00001 1.89543 6.89544 1 8.00001 1ZM3.00001 3.5C3.82844 3.5 4.50001 4.17157 4.50001 5C4.50001 5.82843 3.82844 6.5 3.00001 6.5C2.17158 6.5 1.50001 5.82843 1.50001 5C1.50001 4.17157 2.17158 3.5 3.00001 3.5ZM13 3.5C13.8284 3.5 14.5 4.17157 14.5 5C14.5 5.82843 13.8284 6.5 13 6.5C12.1716 6.5 11.5 5.82843 11.5 5C11.5 4.17157 12.1716 3.5 13 3.5Z" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  `
+})
+export class UserGroupIconComponent {
+  @Input() size: number | string = 16;
+  @Input() color: string = 'currentColor';
+  @Input() strokeWidth: number | string = 1;
+  @Input() absoluteStrokeWidth: boolean = false;
+  @Input() class: string = '';
+
+  get actualStrokeWidth(): number | string {
+    return this.absoluteStrokeWidth
+      ? Number(this.strokeWidth) * (16 / Number(this.size))
+      : this.strokeWidth;
+  }
+}

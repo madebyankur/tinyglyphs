@@ -1,0 +1,12 @@
+# Ignore local development files
+node_modules
+.next
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Ignore workspace files that shouldn't be deployed
+../../packages
+../../icons
+../../node_modules

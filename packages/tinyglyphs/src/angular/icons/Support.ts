@@ -1,0 +1,36 @@
+import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+@Component({
+  selector: 'tg-support',
+  standalone: true,
+  imports: [CommonModule],
+  template: `
+    <svg
+      [attr.width]="size"
+      [attr.height]="size"
+      viewBox="0 0 16 16"
+      fill="none"
+      [attr.stroke]="color"
+      [attr.stroke-width]="actualStrokeWidth"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      [class]="'icon ' + (class || '')"
+    >
+      <path d="M10.4495 6.58579L11.0176 5.94513C11.5986 5.28987 12.437 4.92123 13.3127 4.93596L13.9943 4.94743M9.41421 10.4495L9.58588 11.2884C9.76145 12.1464 10.3032 12.8848 11.0689 13.3099L11.6649 13.6408M6.58579 5.55051L6.41412 4.71163C6.23855 3.85364 5.69682 3.1152 4.93112 2.69013L4.33506 2.35924M5.55051 9.41421L4.98241 10.0549C4.40136 10.7101 3.56299 11.0788 2.68734 11.064L2.00569 11.0526M15 8C15 11.866 11.866 15 8 15C4.13401 15 1 11.866 1 8C1 4.13401 4.13401 1 8 1C11.866 1 15 4.13401 15 8ZM11 8C11 9.65685 9.65685 11 8 11C6.34315 11 5 9.65685 5 8C5 6.34315 6.34315 5 8 5C9.65685 5 11 6.34315 11 8Z"/>
+    </svg>
+  `
+})
+export class SupportIconComponent {
+  @Input() size: number | string = 16;
+  @Input() color: string = 'currentColor';
+  @Input() strokeWidth: number | string = 1;
+  @Input() absoluteStrokeWidth: boolean = false;
+  @Input() class: string = '';
+
+  get actualStrokeWidth(): number | string {
+    return this.absoluteStrokeWidth
+      ? Number(this.strokeWidth) * (16 / Number(this.size))
+      : this.strokeWidth;
+  }
+}

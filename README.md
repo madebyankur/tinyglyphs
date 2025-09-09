@@ -40,6 +40,10 @@ function App() {
 #### Vue
 
 ```vue
+<script setup>
+import { HeartIcon } from "tinyglyphs/vue";
+</script>
+
 <template>
   <div>
     <HeartIcon :size="24" color="red" />
@@ -88,12 +92,6 @@ import { HeartIconComponent, StarIconComponent } from "tinyglyphs/angular";
 export class AppComponent {}
 ```
 
-<script setup>
-import { HeartIcon } from "tinyglyphs/vue";
-</script>
-
-````
-
 ## Icon Props
 
 All icons accept these props:
@@ -129,7 +127,7 @@ import { HomeIcon, UserIcon, SettingsIcon } from "tinyglyphs/react";
 <HomeIcon />                        // Default: 16px, currentColor
 <UserIcon size={24} />              // Custom size
 <SettingsIcon color="#3b82f6" />    // Custom color
-````
+```
 
 ### Styling
 

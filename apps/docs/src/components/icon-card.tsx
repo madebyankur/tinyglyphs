@@ -159,7 +159,7 @@ export const IconCard = React.memo(function IconCard({
         <ScrambleButton
           onClick={handleDownload}
           disabled={downloadButton.state === "loading"}
-          className="group/download-button focus-visible:bg-accent/5 w-auto border-0 px-4 py-2 text-xs focus-visible:ring-0 md:w-24 md:px-2.5"
+          className="group/download-button focus-visible:bg-accent/5 w-auto border-0 px-2 py-2 text-xs focus-visible:ring-0 md:w-24 md:px-2.5"
           title="Download SVG"
           aria-label={`Download ${icon.name} as SVG`}
         >

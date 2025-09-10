@@ -11,7 +11,7 @@ export const TOAST_DURATION = 2000;
 
 export const DEFAULT_VALUES = {
   COLOR: "#ffffff",
-  SIZE: 16,
+  SIZE: 24,
   STROKE_WIDTH: 1.5,
 } as const;
 

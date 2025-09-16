@@ -1,7 +1,5 @@
-// Svelte icon exports
 export type { IconProps } from "./types";
 
-// Icon components
 export { default as AIcon } from "./icons/A.svelte";
 export { default as AaIcon } from "./icons/Aa.svelte";
 export { default as AccessibilityIcon } from "./icons/Accessibility.svelte";

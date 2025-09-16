@@ -3,6 +3,8 @@ import "./globals.css";
 
 import { Inter } from "next/font/google";
 import localFont from "next/font/local";
+import { Toaster } from "sonner";
+import * as TinyGlyphsIcons from "tinyglyphs/react";
 
 import { cn } from "@/lib/utils";
 
@@ -111,6 +113,27 @@ export default function RootLayout({
         )}
       >
         {children}
+        <Toaster
+          position="top-right"
+          theme="dark"
+          toastOptions={{
+            className:
+              "font-departure-mono border-primary-foreground/25 bg-background text-xs text-primary-foreground",
+            style: {
+              backgroundColor: "var(--background)",
+              borderColor: "var(--border)",
+              borderRadius: "0px",
+              color: "var(--foreground)",
+            },
+          }}
+          icons={{
+            success: <TinyGlyphsIcons.CheckIcon />,
+            info: <TinyGlyphsIcons.InfoIcon />,
+            warning: <TinyGlyphsIcons.WarningIcon />,
+            error: <TinyGlyphsIcons.ErrorIcon />,
+            loading: <TinyGlyphsIcons.CircleDashIcon />,
+          }}
+        />
       </body>
     </html>
   );

@@ -1,8 +1,6 @@
-// React icon exports
 export { IconBase } from "./icon-base";
 export type { IconProps } from "./types";
 
-// Icon components
 export { AIcon } from "./icons/A";
 export { AaIcon } from "./icons/Aa";
 export { AccessibilityIcon } from "./icons/Accessibility";

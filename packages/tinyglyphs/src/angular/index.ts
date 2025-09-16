@@ -1,7 +1,5 @@
-// Angular icon exports
 export type { IconProps } from "./types";
 
-// Icon components
 export { AIconComponent } from "./icons/A";
 export { AaIconComponent } from "./icons/Aa";
 export { AccessibilityIconComponent } from "./icons/Accessibility";

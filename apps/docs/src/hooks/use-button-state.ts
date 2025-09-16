@@ -20,6 +20,7 @@ interface UseButtonStateResult {
   displayText: string;
   isScrambling: boolean;
   startTransition: () => void;
+  done: () => void;
   reset: () => void;
 }
 
@@ -97,6 +98,23 @@ export const useButtonState = (
     }, 100);
   }, [addTimeout, scrambleDuration, doneDuration, cleanup]);
 
+  const done = useCallback(() => {
+    cleanup();
+    setState("scrambling-to-done");
+
+    addTimeout(() => {
+      setState("done");
+
+      addTimeout(() => {
+        setState("scrambling-to-idle");
+
+        addTimeout(() => {
+          setState("idle");
+        }, scrambleDuration);
+      }, doneDuration);
+    }, scrambleDuration);
+  }, [addTimeout, scrambleDuration, doneDuration, cleanup]);
+
   const reset = useCallback(() => {
     cleanup();
     setState("idle");
@@ -107,6 +125,7 @@ export const useButtonState = (
     displayText: getDisplayText(state),
     isScrambling: getIsScrambling(state),
     startTransition,
+    done,
     reset,
   };
 };

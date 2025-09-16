@@ -1,8 +1,8 @@
 "use client";
 
+import React, { useCallback, useDeferredValue, useMemo, useState } from "react";
+import { toast } from "sonner";
 import Image from "next/image";
-import React, { useCallback, useMemo, useState } from "react";
-import { toast, Toaster } from "sonner";
 import * as TinyGlyphsIcons from "tinyglyphs/react";
 
 import { CodeBlock } from "@/components/code-block";
@@ -37,14 +37,20 @@ export default function IconsPage() {
 
   const iconRegistry = useIconRegistry();
   const debouncedColor = useDebounced(color, ANIMATION_DELAYS.COLOR_DEBOUNCE);
+  const deferredColor = useDeferredValue(debouncedColor);
+  const deferredSearch = useDeferredValue(searchTerm);
   const { showPage, showIcons } = usePageAnimation(iconRegistry.length > 0);
+
+  const prefersReducedMotion =
+    typeof window !== "undefined" &&
+    window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
 
   const filteredIcons = useMemo(
     () =>
       iconRegistry.filter((icon: IconRegistryEntry) =>
-        icon.name.toLowerCase().includes(searchTerm.toLowerCase()),
+        icon.name.toLowerCase().includes(deferredSearch.toLowerCase()),
       ),
-    [iconRegistry, searchTerm],
+    [iconRegistry, deferredSearch],
   );
 
   const handleCopy = useCallback((text: string, type: "svg" | "jsx") => {
@@ -65,28 +71,6 @@ export default function IconsPage() {
         showPage ? "opacity-100" : "opacity-0",
       )}
     >
-      <Toaster
-        position="top-right"
-        theme="dark"
-        toastOptions={{
-          className:
-            "font-departure-mono border-primary-foreground/25 bg-background text-xs text-primary-foreground",
-          style: {
-            backgroundColor: "var(--background)",
-            borderColor: "var(--border)",
-            borderRadius: "0px",
-            color: "var(--foreground)",
-          },
-        }}
-        icons={{
-          success: <TinyGlyphsIcons.CheckIcon />,
-          info: <TinyGlyphsIcons.InfoIcon />,
-          warning: <TinyGlyphsIcons.WarningIcon />,
-          error: <TinyGlyphsIcons.ErrorIcon />,
-          loading: <TinyGlyphsIcons.CircleDashIcon />,
-        }}
-      />
-
       <div className="mx-auto flex min-h-svh max-w-7xl flex-col">
         <header className="mb-12 flex flex-col items-center gap-8 text-center">
           <h1 className="blur-in-3xl slide-in-from-bottom-20 animate-in fade-in-0 font-display bg-primary-foreground ease-in-out-quint pointer-events-none block overflow-hidden bg-clip-text text-[4rem] leading-none text-transparent uppercase duration-500 select-none sm:text-[8rem]">
@@ -148,7 +132,11 @@ export default function IconsPage() {
             setIsCollapsed={setIsPanelCollapsed}
           />
 
-          <section className="bg-accent/5 border-accent/10 flex h-full max-w-7xl flex-col border border-t-0 p-4 md:p-8">
+          <section
+            className="bg-accent/5 border-accent/10 flex h-full max-w-7xl flex-col border border-t-0 p-4 md:p-8"
+            role="search"
+            aria-label="Icon search"
+          >
             <div className="mb-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
               <div className="relative w-full">
                 <TinyGlyphsIcons.SearchIcon
@@ -156,28 +144,48 @@ export default function IconsPage() {
                   color="var(--muted-foreground)"
                   strokeWidth={2}
                   className="absolute top-1/2 left-3 -translate-y-1/2 transform"
+                  aria-hidden="true"
+                  focusable="false"
                 />
                 <Input
-                  placeholder={`Search ${filteredIcons.length} icons...`}
+                  type="search"
+                  placeholder={`Search ${iconRegistry.length} icons`}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pr-4 pl-10"
+                  className="pr-10 pl-10 [&::-ms-clear]:hidden [&::-webkit-search-cancel-button]:hidden"
                   aria-label="Search icons"
                   aria-describedby="search-results-count"
+                  autoComplete="off"
                 />
+                {searchTerm && (
+                  <button
+                    type="button"
+                    onClick={() => setSearchTerm("")}
+                    className="absolute top-1/2 right-3 -translate-y-1/2 transform"
+                    aria-label="Clear search"
+                  >
+                    <TinyGlyphsIcons.XIcon
+                      size={14}
+                      color="var(--muted-foreground)"
+                      strokeWidth={2}
+                      className="hover:text-primary-foreground transition-colors"
+                    />
+                  </button>
+                )}
               </div>
             </div>
 
-            <div className="border-primary-foreground/15 h-full min-h-64 border">
-              <div
-                id="search-results-count"
-                className="sr-only"
-                aria-live="polite"
-                aria-atomic="true"
-              >
-                {filteredIcons.length} icons found
-              </div>
+            <div
+              id="search-results-count"
+              className="sr-only"
+              role="status"
+              aria-live="polite"
+              aria-atomic="true"
+            >
+              {filteredIcons.length} icons found
+            </div>
 
+            <div className="border-primary-foreground/15 h-full min-h-64 border">
               {filteredIcons.length === 0 ? (
                 <div className="flex h-64 flex-col items-center justify-center gap-4 p-8 text-center">
                   <div className="bg-primary-foreground/5 flex h-24 w-24 items-center justify-center">
@@ -195,30 +203,35 @@ export default function IconsPage() {
                 <div className="ease-in-out-quint relative opacity-100 transition-opacity duration-300">
                   <div className="grid grid-cols-2 gap-px sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
                     {filteredIcons.map(
-                      (icon: IconRegistryEntry, index: number) => (
-                        <div
-                          key={icon.name}
-                          className={cn(
-                            "ease-in-out-quint transition-opacity duration-500",
-                            showIcons ? "opacity-100" : "opacity-0",
-                          )}
-                          style={{
-                            transitionDelay: showIcons
-                              ? `${index * ANIMATION_DELAYS.ICON_STAGGER}ms`
-                              : "0ms",
-                          }}
-                        >
-                          <ErrorBoundary>
-                            <IconCard
-                              icon={icon}
-                              onCopy={handleCopy}
-                              color={debouncedColor}
-                              strokeWidth={width}
-                              size={size}
-                            />
-                          </ErrorBoundary>
-                        </div>
-                      ),
+                      (icon: IconRegistryEntry, index: number) => {
+                        const delayMs = prefersReducedMotion
+                          ? 0
+                          : ANIMATION_DELAYS.ICON_STAGGER;
+                        return (
+                          <div
+                            key={icon.name}
+                            className={cn(
+                              "ease-in-out-quint transition-opacity duration-500",
+                              showIcons ? "opacity-100" : "opacity-0",
+                            )}
+                            style={{
+                              transitionDelay: showIcons
+                                ? `${index * delayMs}ms`
+                                : "0ms",
+                            }}
+                          >
+                            <ErrorBoundary key={icon.name}>
+                              <IconCard
+                                icon={icon}
+                                onCopy={handleCopy}
+                                color={deferredColor}
+                                strokeWidth={width}
+                                size={size}
+                              />
+                            </ErrorBoundary>
+                          </div>
+                        );
+                      },
                     )}
                   </div>
                 </div>

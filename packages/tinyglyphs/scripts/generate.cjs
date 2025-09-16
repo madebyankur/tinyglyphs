@@ -405,7 +405,6 @@ function convertToVueElement(element) {
 }
 
 function main() {
-  // Show help if requested
   if (config.help) {
     showHelp();
     return;
@@ -418,7 +417,6 @@ function main() {
     console.log("🔍 DRY RUN MODE - No files will be written");
   }
 
-  // Read all SVG files
   const svgFiles = fs
     .readdirSync(iconsDir)
     .filter((file) => file.endsWith(".svg"));
@@ -439,7 +437,6 @@ function main() {
   console.log("\n🏗️  Generating framework components...");
   generateAllFrameworks(svgFiles);
 
-  // Show final statistics
   showStatistics();
 }
 
@@ -482,12 +479,10 @@ function cleanExistingFiles() {
 function generateAllFrameworks(svgFiles) {
   stats.frameworks = Object.keys(frameworks).length;
 
-  // Process each framework
   Object.entries(frameworks).forEach(([frameworkName, frameworkConfig]) => {
     const frameworkDir = path.join(srcDir, frameworkName);
     const frameworkIconsDir = path.join(frameworkDir, "icons");
 
-    // Create framework and icons directories
     if (!fs.existsSync(frameworkDir)) {
       fs.mkdirSync(frameworkDir, { recursive: true });
     }
@@ -503,7 +498,6 @@ function generateAllFrameworks(svgFiles) {
       const svgPath = path.join(iconsDir, svgFile);
       let svgContent = fs.readFileSync(svgPath, "utf-8");
 
-      // Apply optimization if requested
       if (config.optimize) {
         svgContent = optimizeSvg(svgContent);
       }
@@ -580,19 +574,15 @@ function generateAllFrameworks(svgFiles) {
   });
 }
 
-// Function to generate framework-specific base files
 function generateFrameworkBase(frameworkName, frameworkDir) {
   switch (frameworkName) {
     case "react":
-      // React base files already exist
       break;
 
     case "vue":
-      // Vue base files already exist
       break;
 
     case "svelte":
-      // No base component needed for Svelte
       fs.writeFileSync(
         path.join(frameworkDir, "types.ts"),
         `export interface IconProps {
@@ -620,45 +610,40 @@ function generateFrameworkBase(frameworkName, frameworkDir) {
   }
 }
 
-// Function to generate framework-specific index files
 function generateFrameworkIndex(frameworkName, frameworkDir, exports) {
   let indexContent = "";
 
   switch (frameworkName) {
     case "react":
-      indexContent = `// React icon exports
+      indexContent = `
 export { IconBase } from "./icon-base";
 export type { IconProps } from "./types";
 
-// Icon components
 ${exports.map((e) => e.exportLine).join("\n")}
 `;
       break;
 
     case "vue":
-      indexContent = `// Vue icon exports
+      indexContent = `
 export { IconBase } from "./icon-base";
 export type { IconProps } from "./types";
 
-// Icon components
 ${exports.map((e) => e.exportLine).join("\n")}
 `;
       break;
 
     case "svelte":
-      indexContent = `// Svelte icon exports
+      indexContent = `
 export type { IconProps } from "./types";
 
-// Icon components
 ${exports.map((e) => e.exportLine).join("\n")}
 `;
       break;
 
     case "angular":
-      indexContent = `// Angular icon exports
+      indexContent = `
 export type { IconProps } from "./types";
 
-// Icon components
 ${exports.map((e) => e.exportLine).join("\n")}
 `;
       break;

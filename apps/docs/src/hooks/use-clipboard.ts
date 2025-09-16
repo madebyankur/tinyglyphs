@@ -27,6 +27,23 @@ export const useClipboard = (
       startLoading();
 
       try {
+        if (text.trim().startsWith("<svg") && "ClipboardItem" in window) {
+          try {
+            const blob = new Blob([text], { type: "image/svg+xml" });
+            const clipboardItem = new (window as typeof globalThis & { ClipboardItem: typeof ClipboardItem }).ClipboardItem({
+              "image/svg+xml": blob,
+            });
+            await navigator.clipboard.write([clipboardItem]);
+            options.onSuccess?.(text);
+            return true;
+          } catch (richError) {
+            console.warn(
+              "Rich clipboard copy failed, falling back to text:",
+              richError,
+            );
+          }
+        }
+
         const success = await copyToClipboard(text);
 
         if (success) {

@@ -17,11 +17,12 @@ export const useIconRegistry = (): IconRegistryEntry[] => {
       ) {
         const displayName = exportName.replace(/Icon$/, "");
         const svgName = displayName === "Icon" ? "@" : displayName;
+        const importName = `${displayName}Icon`;
 
         iconEntries.push({
           name: svgName,
           component: component as IconComponent,
-          importName: displayName,
+          importName,
         });
       }
     }
